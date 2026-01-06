@@ -1,4 +1,4 @@
-// Dados dos fatos com IDs únicos 
+// Facts data with unique IDs 
 export const factsData = [
   {
     id: 'fact_000',
@@ -56,15 +56,15 @@ export const factsData = [
   }
 ]
 
-// Função para buscar fato por ID
+// Function to get fact by ID
 export const getFactById = (id) => {
   return factsData.find(fact => fact.id === id)
 }
 
-// Função para buscar todos os fatos ordenados por data
+// Function to get all facts sorted by date
 export const getSortedFacts = () => {
   return factsData.sort((a, b) => new Date(a.date) - new Date(b.date))
 }
 
-// Alias para manter compatibilidade
+// Alias to maintain compatibility
 export const sortedFactsData = getSortedFacts()

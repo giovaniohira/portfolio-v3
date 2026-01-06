@@ -1,4 +1,4 @@
-// Dados dos projetos com IDs únicos
+// Project data with unique IDs
 export const projectsData = [
   {
     id: 'proj_001',
@@ -102,15 +102,15 @@ export const projectsData = [
     title: "Event Management API",
     description: "A RESTful API for event management, built with Node.js and Express. Provides endpoints for creating, updating, listing, and deleting events with a PostgreSQL database using Prisma ORM.",
     longDescription: "The Event Management API is a backend service designed to handle the core logic of managing events. It supports CRUD operations for events, integrates PostgreSQL as a relational database, and uses Prisma ORM for database access. The project demonstrates clean architecture, RESTful principles, and modern backend development practices such as environment variable management, error handling, and request validation.",
-    image: "https://blog.accurate.com.br/wp-content/uploads/2023/10/apiwebservicewebstoryslide2-1920x1080-1.jpg", // pode trocar por um print do seu repo ou Diagrama
+    image: "https://blog.accurate.com.br/wp-content/uploads/2023/10/apiwebservicewebstoryslide2-1920x1080-1.jpg", // can be replaced with a screenshot of your repo or diagram
     additionalImages: [
-      // aqui você pode adicionar prints de código, diagramas de arquitetura, ou screenshots de testes
+      // here you can add code screenshots, architecture diagrams, or test screenshots
     ],
     tags: ["JavaScript", "Node.js", "Express", "Prisma", "PostgreSQL", "REST API", "dotenv"],
     links: {
       github: "https://github.com/giovaniohira/event-management-api"
     },
-    date: "2024-06-01", // usei uma estimativa, você pode colocar a data real de início ou final
+    date: "2024-06-01", // used an estimate, you can put the actual start or end date
     status: "completed",
     featured: false,
     features: [
@@ -134,17 +134,17 @@ export const projectsData = [
     
 ]
 
-// Função para buscar projeto por ID
+// Function to get project by ID
 export const getProjectById = (id) => {
   return projectsData.find(project => project.id === id)
 }
 
-// Função para buscar todos os projetos ordenados por data
+// Function to get all projects sorted by date
 export const getSortedProjects = () => {
   return projectsData.sort((a, b) => new Date(b.date) - new Date(a.date))
 }
 
-// Função para agrupar projetos por ano
+// Function to group projects by year
 export const getProjectsByYear = () => {
   return getSortedProjects().reduce((acc, project) => {
     const year = new Date(project.date).getFullYear()
@@ -156,18 +156,18 @@ export const getProjectsByYear = () => {
   }, {})
 }
 
-// Função para obter anos únicos dos projetos
+// Function to get unique years from projects
 export const getProjectYears = () => {
   return Object.keys(getProjectsByYear()).sort((a, b) => b - a)
 }
 
-// Função para obter todas as tecnologias
+// Function to get all technologies
 export const getAllTechnologies = () => {
   const allTags = getSortedProjects().flatMap(project => project.tags)
   return [...new Set(allTags)].sort()
 }
 
-// Função para filtrar projetos por tecnologia
+// Function to filter projects by technology
 export const filterProjectsByTechnology = (technology) => {
   if (!technology || technology === 'all') return getSortedProjects()
   return getSortedProjects().filter(project => 
@@ -175,12 +175,12 @@ export const filterProjectsByTechnology = (technology) => {
   )
 }
 
-// Função para obter projetos em destaque
+// Function to get featured projects
 export const getFeaturedProjects = () => {
   return projectsData.filter(project => project.featured === true)
 }
 
-// Aliases para manter compatibilidade
+// Aliases to maintain compatibility
 export const sortedProjectsData = getSortedProjects()
 export const projectsByYear = getProjectsByYear()
 export const projectYears = getProjectYears() 

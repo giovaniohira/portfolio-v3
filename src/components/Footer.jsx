@@ -125,8 +125,8 @@ const Footer = () => {
                 Built with React & Tailwind CSS
               </p>
               <div className="flex items-center space-x-1">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                <span className="text-xs text-gray-500">Available for work</span>
+                <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                <span className="text-xs text-gray-500">Open to proposals</span>
               </div>
             </div>
           </div>

@@ -6,6 +6,7 @@ import Home from './components/Home'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
 import ProjectPage from './components/ProjectPage'
+import ExperiencePage from './components/ExperiencePage'
 import Footer from './components/Footer'
 
 // Component to handle page state based on location
@@ -57,6 +58,9 @@ function App() {
           <Routes>
             {/* Individual project pages */}
             <Route path="/projects/:projectId" element={<ProjectPage />} />
+            
+            {/* Individual experience pages */}
+            <Route path="/experience/:experienceId" element={<ExperiencePage />} />
             
             {/* Main app pages */}
             <Route path="*" element={

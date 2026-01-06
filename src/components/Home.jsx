@@ -1,109 +1,10 @@
 import { motion } from "framer-motion";
-import { getTimelineWithData } from "../data/timeline";
 import { getFeaturedProjects } from "../data/projects";
+import { getSortedExperiences, formatWorkPeriod } from "../data/experience";
 
 const Home = () => {
-  // Usar a nova função que retorna timeline com dados completos
-  const mixedTimeline = getTimelineWithData();
   const featuredProjects = getFeaturedProjects();
-
-  const renderTimelineCard = (item) => {
-    if (item.type === "project") {
-      // Dados do projeto já estão disponíveis em item.data
-      const projectData = item.data;
-
-      if (!projectData) {
-        // Fallback if project not found
-        return (
-          <div className="p-5 timeline-card project-card bg-gray-800/20 rounded-lg">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-purple-300 font-medium">
-                PROJECT
-              </span>
-              <span className="text-xs text-gray-400">
-                {new Date(item.date).toLocaleDateString("en-US", {
-                  month: "short",
-                  year: "numeric",
-                })}
-              </span>
-            </div>
-            <h3 className="text-lg font-medium text-gray-100 mb-2">
-              Projeto não encontrado
-            </h3>
-            <p className="text-gray-300 text-sm leading-relaxed">
-              Dados não disponíveis
-            </p>
-          </div>
-        );
-      }
-
-      // Project card with link - using actual project data
-      return (
-        <div className="p-5 timeline-card project-card bg-gray-800/20 rounded-lg">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-purple-300 font-medium">PROJECT</span>
-            <span className="text-xs text-gray-400">
-              {new Date(item.date).toLocaleDateString("en-US", {
-                month: "short",
-                year: "numeric",
-              })}
-            </span>
-          </div>
-          <h3 className="text-lg font-medium text-gray-100 mb-2">
-            {projectData.title}
-          </h3>
-          <p className="text-gray-300 text-sm leading-relaxed mb-3">
-            {projectData.description}
-          </p>
-
-          {/* Show project tags */}
-          <div className="flex flex-wrap gap-1">
-            {projectData.tags.slice(0, 3).map((tag) => (
-              <span key={tag} className="px-2 py-1 text-xs text-purple-300">
-                {tag}
-              </span>
-            ))}
-            {projectData.tags.length > 3 && (
-              <span className="px-2 py-1 text-gray-400 text-xs">
-                +{projectData.tags.length - 3}
-              </span>
-            )}
-          </div>
-        </div>
-      );
-    } else {
-      // Fact card - dados do fato já estão disponíveis em item.data
-      const factData = item.data;
-      return (
-        <div className="p-5 timeline-card">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-xs text-purple-300 font-medium">
-              MILESTONE
-            </span>
-            <span className="text-xs text-gray-400">
-              {new Date(item.date).toLocaleDateString("en-US", {
-                month: "short",
-                year: "numeric",
-              })}
-            </span>
-          </div>
-          <h3 className="text-lg font-medium text-gray-100 mb-2">
-            {factData.title}
-          </h3>
-          <p className="text-gray-300 text-sm leading-relaxed">
-            {factData.description}
-          </p>
-        </div>
-      );
-    }
-  };
-
-  const handleProjectClick = (item) => {
-    if (item.type === "project" && item.referenceId) {
-      // Navigate to the individual project page
-      window.location.href = `/projects/${item.referenceId}`;
-    }
-  };
+  const experiences = getSortedExperiences();
 
   return (
     <div className="min-h-screen px-6 py-16">
@@ -119,9 +20,9 @@ const Home = () => {
           </p>
         </div>
 
-        {/* Main Content - Side by Side Layout */}
+        {/* Main Content - Two Column Layout */}
         <div className="grid lg:grid-cols-2 gap-24 mb-20">
-          {/* About Me Section */}
+          {/* Column 1: About Me Section */}
           <section className="fade-in-delay-1 text-left">
             <div className="mb-12">
               <h2 className="text-2xl font-light mb-6 text-gray-100 text-left">
@@ -191,7 +92,7 @@ const Home = () => {
                         d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
                       />
                     </svg>
-                    Full-Stack Development
+                    Backend/Full-Stack Developer
                   </li>
                   <li className="text-gray-300 text-left flex items-start gap-3">
                     <svg
@@ -209,7 +110,7 @@ const Home = () => {
                     </svg>
                     <div className="flex flex-col">
                       <p>1+ years of professional experience</p>
-                      <p>5+ years of experience</p>
+                      <p>4+ years of experience in software development</p>
                     </div>
                   </li>
                 </ul>
@@ -237,8 +138,76 @@ const Home = () => {
             </div>
           </section>
 
-          {/* Right Side - Featured Projects + Journey */}
+          {/* Column 2: Experience + Featured Projects */}
           <div className="fade-in-delay-2">
+            {/* Experience Section */}
+            <section className="text-left mb-12">
+              <div className="mb-12">
+                <h2 className="text-2xl font-light mb-6 text-gray-100 text-left">
+                  <span className="accent-text">Experience</span>
+                </h2>
+                <p className="text-gray-300 leading-relaxed text-left">
+                  Professional experience and career journey.
+                </p>
+              </div>
+
+              <div className="space-y-8">
+                {experiences.map((exp, index) => (
+                  <motion.div
+                    key={exp.id}
+                    className="bg-gray-800/10 rounded-lg p-5 border border-gray-700/30 hover:bg-gray-800/20 transition-all duration-300 cursor-pointer"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 + index * 0.1 }}
+                    onClick={() => window.location.href = `/experience/${exp.id}`}
+                  >
+                    {/* Company Logo/Name */}
+                    <div className="mb-4">
+                      <h3 className="text-lg font-medium text-gray-100 mb-1">
+                        {exp.company}
+                      </h3>
+                      <p className="text-sm font-medium text-purple-300 mb-2">
+                        {exp.position}
+                      </p>
+                      <p className="text-xs text-gray-400 mb-1">
+                        {exp.company} · {exp.employmentType}
+                      </p>
+                      <p className="text-xs text-gray-400 mb-1">
+                        {formatWorkPeriod(exp.startDate, exp.endDate, exp.isCurrent)}
+                      </p>
+                      <p className="text-xs text-gray-400 mb-3">{exp.location}</p>
+                    </div>
+
+                    {/* Short Summary (max 4 lines) */}
+                    <div className="mb-4">
+                      <p className="text-sm text-gray-300 leading-relaxed line-clamp-4">
+                        {exp.shortSummary || exp.functionSummary}
+                      </p>
+                    </div>
+
+                    {/* Read More Link */}
+                    <div className="flex items-center gap-2 text-xs text-purple-300 hover:text-purple-200 transition-colors">
+                      <span>Read more</span>
+                      <svg
+                        className="w-3 h-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </section>
+
+            {/* Featured Projects Section */}
             {/* Featured Projects Section */}
             {featuredProjects.length > 0 && (
               <div className="mb-12">
@@ -303,37 +272,6 @@ const Home = () => {
               </div>
             )}
 
-            {/* Journey Section */}
-            <section>
-              <div className="mb-12">
-                <h2 className="text-2xl font-light mb-6 text-gray-100">
-                  My <span className="accent-text">Journey</span>
-                </h2>
-                <p className="text-gray-300 leading-relaxed">
-                  A timeline of my development journey, including key milestones
-                  and notable projects.
-                </p>
-              </div>
-
-              <div className="space-y-8">
-                {mixedTimeline.slice(0, 99).map((item, index) => (
-                  <div
-                    key={`${item.type}-${item.id}`}
-                    className="relative fade-in-delay-3"
-                    style={{ animationDelay: `${0.3 + index * 0.1}s` }}
-                  >
-                    <div
-                      onClick={() => handleProjectClick(item)}
-                      className={
-                        item.type === "project" ? "cursor-pointer" : ""
-                      }
-                    >
-                      {renderTimelineCard(item)}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
           </div>
         </div>
       </div>

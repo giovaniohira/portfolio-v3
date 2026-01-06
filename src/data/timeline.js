@@ -1,15 +1,15 @@
-// Timeline - apenas referências por ID
-// Os dados de year e date são puxados automaticamente dos dados referenciados
+// Timeline - only ID references
+// year and date data are automatically pulled from referenced data
 export const timelineData = [
   {
     id: 'timeline_001',
     type: 'project',
-    referenceId: 'proj_001', // Referencia o projeto Vault
+    referenceId: 'proj_001', // References the Vault project
   },
   {
     id: 'timeline_002',
     type: 'project',
-    referenceId: 'proj_002', // Referencia o projeto Portfolio
+    referenceId: 'proj_002', // References the Portfolio project
   },
   {
     id: 'timeline_003',
@@ -19,7 +19,7 @@ export const timelineData = [
   {
     id: 'timeline_004',
     type: 'project',
-    referenceId: 'proj_003', // Referencia o projeto Google Maps Routes API Wrapper
+    referenceId: 'proj_003', // References the Google Maps Routes API Wrapper project
   },
   {
     id: 'timeline_006',
@@ -49,34 +49,34 @@ export const timelineData = [
   {
     id: 'timeline_012',
     type: 'project',
-    referenceId: 'proj_004', // Referencia o projeto Event Management API (2024)
+    referenceId: 'proj_004', // References the Event Management API project (2024)
   }
 ]
 
 
-// Importar funções dos arquivos separados
+// Import functions from separate files
 import { getProjectById } from './projects.js'
 import { getFactById } from './facts.js'
 
-// Função para buscar dados por ID (projeto ou fato)
+// Function to get data by ID (project or fact)
 export const getDataById = (id) => {
-  // Busca em projetos
+  // Search in projects
   const project = getProjectById(id)
   if (project) return project
   
-  // Busca em fatos
+  // Search in facts
   const fact = getFactById(id)
   if (fact) return fact
   
   return null
 }
 
-// Função para buscar dados completos do timeline
+// Function to get complete timeline data
 export const getTimelineWithData = () => {
   return timelineData.map(timelineItem => {
     const referencedData = getDataById(timelineItem.referenceId)
     
-    // Puxar year e date dos dados referenciados
+    // Pull year and date from referenced data
     const year = referencedData?.year || new Date(referencedData?.date).getFullYear()
     const date = referencedData?.date
     
@@ -86,25 +86,25 @@ export const getTimelineWithData = () => {
       date,
       data: referencedData
     }
-  }).sort((a, b) => new Date(b.date) - new Date(a.date)) // Sempre ordenar do mais novo para o mais antigo
+  }).sort((a, b) => new Date(b.date) - new Date(a.date)) // Always sort from newest to oldest
 }
 
-// Função para buscar timeline por tipo (já ordenado)
+// Function to get timeline by type (already sorted)
 export const getTimelineByType = (type) => {
   return getTimelineWithData().filter(item => item.type === type)
 }
 
-// Função para buscar timeline por ano (já ordenado)
+// Function to get timeline by year (already sorted)
 export const getTimelineByYear = (year) => {
   return getTimelineWithData().filter(item => item.year === year)
 }
 
-// Função para buscar timeline ordenado por data (já ordenado por padrão)
+// Function to get timeline sorted by date (already sorted by default)
 export const getSortedTimeline = () => {
-  return getTimelineWithData() // Já vem ordenado da função getTimelineWithData
+  return getTimelineWithData() // Already sorted from getTimelineWithData function
 }
 
-// Função para adicionar novo item ao timeline
+// Function to add new item to timeline
 export const addToTimeline = (type, referenceId, highlight = false) => {
   const newId = `timeline_${String(timelineData.length + 1).padStart(3, '0')}`
   const newTimelineItem = {
@@ -117,7 +117,7 @@ export const addToTimeline = (type, referenceId, highlight = false) => {
   return newTimelineItem
 }
 
-// Função para remover item do timeline
+// Function to remove item from timeline
 export const removeFromTimeline = (timelineId) => {
   const index = timelineData.findIndex(item => item.id === timelineId)
   if (index > -1) {
