@@ -10,21 +10,25 @@ const Home = () => {
     <div className="min-h-screen px-6 py-16">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-20 fade-in">
+        <div className="text-center mb-24 pb-8 fade-in relative">
           <h1 className="text-4xl md:text-5xl font-light mb-6 text-gray-100">
             Hi, I'm <span className="accent-text">Giovani Ohira</span>
           </h1>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            A passionate developer crafting digital experiences and turning
-            ideas into reality.
+            Junior developer focused on backend with 2 years of professional experience, currently working as SDET{" "}
+            <a href="https://voidr.co" target="_blank" rel="noopener noreferrer" className="accent-text hover:opacity-80">
+              @voidr
+            </a>
           </p>
+          {/* Subtle gradient separator */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent" />
         </div>
 
         {/* Main Content - Two Column Layout */}
         <div className="grid lg:grid-cols-2 gap-24 mb-20">
           {/* Column 1: About Me Section */}
           <section className="fade-in-delay-1 text-left">
-            <div className="mb-12">
+            <div className="mb-10">
               <h2 className="text-2xl font-light mb-6 text-gray-100 text-left">
                 About <span className="accent-text">Me</span>
               </h2>
@@ -33,9 +37,9 @@ const Home = () => {
               </p>
             </div>
 
-            <div className="space-y-12">
+            <div className="space-y-10">
               {/* Personal Info */}
-              <div className="text-left">
+              <div className="text-left pl-4 py-4 rounded-lg bg-gradient-to-r from-purple-900/5 to-transparent border-l border-purple-500/10">
                 <h3 className="text-lg font-medium mb-4 text-gray-100 text-left">
                   Personal Information
                 </h3>
@@ -94,45 +98,20 @@ const Home = () => {
                     </svg>
                     Backend/Full-Stack Developer
                   </li>
-                  <li className="text-gray-300 text-left flex items-start gap-3">
-                    <svg
-                      className="w-4 h-4 text-purple-300 mt-1 flex-shrink-0"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                    <div className="flex flex-col">
-                      <p>1+ years of professional experience</p>
-                      <p>4+ years of experience in software development</p>
-                    </div>
-                  </li>
                 </ul>
               </div>
 
               {/* Description */}
-              <div className="text-left">
+              <div className="text-left pt-6 relative">
+                <div className="absolute top-0 left-0 w-16 h-px bg-gradient-to-r from-purple-500/15 to-transparent" />
                 <h3 className="text-lg font-medium mb-4 text-gray-100 text-left">
                   Who I Am
                 </h3>
                 <p className="text-gray-300 leading-relaxed text-left">
-                  I'm a dedicated full-stack developer passionate about building
-                  secure, scalable, and user-friendly applications. I wrote my
-                  first code in 2020 and have been focused on web development
-                  since 2022, constantly learning and evolving my skills through
-                  personal projects and professional experience.
+                  I’m a backend-leaning full‑stack developer who cares about building software that doesn’t break in real life—secure by default, fast under pressure, and easy to maintain. I started coding in 2020 and shifted hard into web development in 2022; since then I’ve been learning by shipping: personal projects that force real decisions around architecture, tradeoffs, and reliability.
                 </p>
                 <p className="text-gray-300 leading-relaxed mt-4 text-left">
-                  I specialize in modern web technologies such as React,
-                  Node.js, and TypeScript, with a strong focus on security and
-                  performance. Beyond coding, I enjoy exploring new technologies
-                  and sharing knowledge with the developer community.
+                  Today I work as an SDET, which means I’m obsessive about quality and edge cases—and I bring that mindset into development. My core stack is React, Node.js, and TypeScript, and I’m especially drawn to roles where I can own backend features end‑to‑end, tighten up performance and security, and collaborate with a team that values clear communication and clean execution.
                 </p>
               </div>
             </div>
@@ -141,8 +120,8 @@ const Home = () => {
           {/* Column 2: Experience + Featured Projects */}
           <div className="fade-in-delay-2">
             {/* Experience Section */}
-            <section className="text-left mb-12">
-              <div className="mb-12">
+            <section className="text-left pb-6 relative">
+              <div className="mb-10">
                 <h2 className="text-2xl font-light mb-6 text-gray-100 text-left">
                   <span className="accent-text">Experience</span>
                 </h2>
@@ -161,21 +140,21 @@ const Home = () => {
                     transition={{ delay: 0.2 + index * 0.1 }}
                     onClick={() => window.location.href = `/experience/${exp.id}`}
                   >
-                    {/* Company Logo/Name */}
-                    <div className="mb-4">
-                      <h3 className="text-lg font-medium text-gray-100 mb-1">
-                        {exp.company}
-                      </h3>
-                      <p className="text-sm font-medium text-purple-300 mb-2">
-                        {exp.position}
-                      </p>
-                      <p className="text-xs text-gray-400 mb-1">
-                        {exp.company} · {exp.employmentType}
-                      </p>
-                      <p className="text-xs text-gray-400 mb-1">
-                        {formatWorkPeriod(exp.startDate, exp.endDate, exp.isCurrent)}
-                      </p>
-                      <p className="text-xs text-gray-400 mb-3">{exp.location}</p>
+                    {/* Company + meta (gray info à direita, mesma altura que título + cargo) */}
+                    <div className="flex justify-between items-stretch gap-4 mb-4">
+                      <div className="flex flex-col justify-between">
+                        <h3 className="text-lg font-medium text-gray-100 mb-1">
+                          {exp.company}
+                        </h3>
+                        <p className="text-sm font-medium text-purple-300">
+                          {exp.position}
+                        </p>
+                      </div>
+                      <div className="flex flex-col justify-between text-right text-xs text-gray-400 shrink-0">
+                        <p>{formatWorkPeriod(exp.startDate, exp.endDate, exp.isCurrent)}</p>
+                        <p>{exp.location}</p>
+                        <p>{exp.employmentType}</p>
+                      </div>
                     </div>
 
                     {/* Short Summary (max 4 lines) */}
@@ -208,18 +187,17 @@ const Home = () => {
             </section>
 
             {/* Featured Projects Section */}
-            {/* Featured Projects Section */}
             {featuredProjects.length > 0 && (
-              <div className="mb-12">
+              <div className="mb-12 pt-6 section-fade-top section-glow">
                 <h2 className="text-2xl font-light mb-6 text-gray-100">
                   Featured <span className="text-purple-300">Projects</span>
                 </h2>
-                <p className="text-gray-300 leading-relaxed mb-6">
+                <p className="text-gray-300 leading-relaxed mb-8">
                   Highlighted projects that showcase my skills and passion for
                   creating innovative solutions.
                 </p>
 
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {featuredProjects.map((project, index) => (
                     <motion.div
                       key={project.id}
