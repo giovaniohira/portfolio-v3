@@ -4,29 +4,32 @@ export const experienceData = [
     id: 'exp_001',
     company: 'Voidr',
     companyUrl: 'https://www.voidr.co/en',
-    shortSummary: 'Responsible for validating client platforms through end-to-end automated testing, ensuring reliability and product quality. Translates real user flows into robust automated test suites using Playwright and AI-powered automation.',
+    shortSummary: 'SDET Jr building reliable end-to-end automation for client platforms—turning real user flows into stable Playwright suites with TypeScript, MCP integration, and self-healing capabilities that cut regression time and raise confidence in releases.',
     position: 'SDET Jr',
     employmentType: 'Full-time',
     location: 'Paraná, Brazil · Remote',
     startDate: '2025-10-01',
     endDate: null, // null means "Present"
     isCurrent: true,
-    description: 'Voidr | Automated testing for modern tech teams',
-    functionSummary: 'Responsible for validating client platforms through end-to-end automated testing, ensuring reliability, stability, and product quality. Translates real user flows and technical requirements into robust automated test suites that enhance the value of Voidr\'s AI-powered automation platform.',
+    description: 'At Voidr, I help teams trust their releases by building end-to-end automation around the flows that matter most to users, using Playwright, TypeScript, MCP, and self-healing test patterns.',
+    functionSummary: 'My daily work centers on building and maintaining reliable test automation. I start with technical discovery—mapping client architecture, critical user paths, and API interactions—then translate that into an automation strategy. I write Playwright tests in TypeScript, integrate them with MCP for better test orchestration, and implement self-healing patterns to reduce flakiness. I maintain these suites in CI/CD, debug failures quickly, and work with stakeholders to ensure coverage aligns with real user outcomes, not just happy paths.',
     keyResponsibilities: [
-      'Perform technical discovery to understand client architecture, critical flows, risks, and API interactions for comprehensive test coverage.',
-      'Define automation scope and strategy based on functional requirements and system analysis, translating real user flows into robust automated test suites.',
-      'Develop proof-of-concept tests and initial automation suites (smoke/critical path) using JavaScript, Playwright, and CI/CD pipelines.',
-      'Implement, maintain, and debug automated E2E tests with focus on stability, repeatability, and scalability for AI-powered automation platform.',
-      'Validate client platforms through end-to-end automated testing, ensuring reliability, stability, and product quality using Playwright and internal frameworks.'
+      'Run technical discovery to understand client architecture, critical paths, risks, and key API interactions.',
+      'Define automation scope and strategy from functional requirements and system behavior (what to cover first, and why).',
+      'Build proof-of-concept and smoke/critical-path suites in Playwright with TypeScript, integrated into CI/CD pipelines.',
+      'Implement self-healing test patterns and MCP integration to improve test stability and reduce maintenance overhead.',
+      'Maintain and debug E2E tests with a focus on stability, repeatability, and low flake rate.',
+      'Partner with stakeholders to align automation coverage with real user outcomes, not just happy-path checks.'
     ],
-    impact: 'Reduced client platform testing time from 6 hours to 12 minutes, achieving 97% time reduction and significantly improving testing efficiency and delivery speed. Enables reliable automation for clients by bridging technical understanding with customer needs, accelerating platform adoption and reducing manual testing workload.',
+    impact: 'Reduced a client regression cycle from ~6 hours to ~12 minutes (97% faster), improving delivery speed and freeing teams from repetitive manual checks. Helped accelerate adoption of automation by connecting technical constraints to customer goals and turning them into dependable test coverage.',
     skills: [
       'Playwright',
+      'TypeScript',
+      'MCP',
+      'Self-healing tests',
       'AI-powered automation',
       'Software Testing',
       'Requirements Analysis',
-      'JavaScript',
       'CI/CD',
     ]
   }
