@@ -131,8 +131,8 @@ const ExperiencePage = () => {
                   key={idx}
                   className="text-gray-300 leading-relaxed flex items-start gap-3"
                 >
-                  <span className="text-purple-300 mt-1.5 flex-shrink-0">•</span>
-                  <span>{responsibility}</span>
+                  <span className="text-purple-300 mt-0.5 flex-shrink-0">•</span>
+                  <span className="flex-1">{responsibility}</span>
                 </li>
               ))}
             </ul>
@@ -211,4 +211,5 @@ const ExperiencePage = () => {
 };
 
 export default ExperiencePage;
+
 

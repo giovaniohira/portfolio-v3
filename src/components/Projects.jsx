@@ -80,11 +80,16 @@ const Projects = () => {
           onClearTechnologies={handleClearTechnologies}
         />
 
-        <ProjectsGrid
-          filteredProjects={filteredProjects}
-          onProjectClick={handleProjectClick}
-          onClearAllFilters={handleClearAllFilters}
-        />
+        <div className="relative pt-8">
+          {/* Subtle separator before projects grid */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent" />
+          
+          <ProjectsGrid
+            filteredProjects={filteredProjects}
+            onProjectClick={handleProjectClick}
+            onClearAllFilters={handleClearAllFilters}
+          />
+        </div>
       </div>
     </div>
   );
