@@ -1,11 +1,34 @@
+/**
+ * Template for a new project. Copy this object into projectsData and fill in.
+ * Required: id, type, title, description, image, tags, date, status.
+ * Optional: featured, longDescription, additionalImages, links, features, architecture.
+ * ID format: proj_XXX (e.g. proj_005). Use next number after existing entries.
+ */
+export const projectTemplate = {
+  id: 'proj_XXX',
+  type: 'project',
+  title: '',
+  description: '',
+  longDescription: '',
+  image: '',
+  additionalImages: [],
+  tags: [],
+  links: { github: '', liveDemo: '', article: '', npm: '' },
+  date: 'YYYY-MM-DD',
+  status: 'completed',
+  featured: false,
+  features: [],
+  architecture: {}
+}
+
 // Project data with unique IDs
 export const projectsData = [
   {
     id: 'proj_001',
     type: 'project',
     title: "Vault: Secure Password & TOTP Manager",
-    description: "End-to-end encrypted password + TOTP manager. Client-side AES‑GCM (WebCrypto) keeps secrets in the browser; the server stores only ciphertext. Built with Next.js/React, Node/Express, Prisma, and Postgres.",
-    longDescription: "Vault started as a security challenge: build a password + TOTP manager where the master password never leaves the device and the server never sees plaintext secrets. The core model is client-side AES‑GCM encryption via WebCrypto—Vault only sends encrypted payloads to the backend, so the database remains useful to an attacker only as ciphertext.\n\nBeyond the crypto, I focused on the parts that make security usable: a clean flow for creating and managing credentials, predictable auth with JWT, and a UI that makes the “secure default” path the easiest path. This project pushed me to think in threat models and trade-offs, not just features—what to protect, where to protect it, and how to keep the system maintainable as it grows.",
+    description: "End-to-end encrypted password + TOTP manager. Client-side AES-GCM (WebCrypto) keeps secrets in the browser; the server stores only ciphertext. Built with Next.js/React, Node/Express, Prisma, and Postgres.",
+    longDescription: "Vault started as a security challenge: build a password + TOTP manager where the master password never leaves the device and the server never sees plaintext secrets. The core model is client-side AES-GCM encryption via WebCrypto. Vault only sends encrypted payloads to the backend, so the database is useless to an attacker without the master password.\n\nBeyond the crypto, I focused on the parts that make security usable: a clean flow for creating and managing credentials, predictable auth with JWT, and a UI that makes the “secure default” path the easiest path. This project pushed me to think in threat models and trade-offs, not just features: what to protect, where to protect it, and how to keep the system maintainable as it grows.",
     image: "https://i.ibb.co/ZpgScTy4/image-2025-08-27-213005278.png",
     additionalImages: [
       "https://i.ibb.co/cS2LspnJ/image-2025-08-27-214106190.png",
@@ -24,7 +47,7 @@ export const projectsData = [
     status: "completed",
     featured: true,
     features: [
-      "Encrypted-at-source storage: credentials and TOTP secrets are AES‑GCM encrypted in the browser before any network request",
+      "Encrypted-at-source storage: credentials and TOTP secrets are AES-GCM encrypted in the browser before any network request",
       "Master password stays client-side; backend persists only encrypted blobs",
       "JWT authentication to protect access to encrypted vault data",
       "Prisma + PostgreSQL persistence layer built for safe data access patterns",
@@ -44,7 +67,7 @@ export const projectsData = [
     title: "Google Maps Routes API Wrapper",
     featured: true,
     description: "A lightweight Node.js wrapper for Google Maps Routes/Directions that improves developer experience with cleaner request building and parsed, consistent outputs.",
-    longDescription: "This project is about developer experience. Instead of rewriting low-level HTTP calls and query construction every time I needed routes data, I built a small wrapper that centralizes configuration, request building, and response parsing.\n\nThe result is a reusable module that makes routing features faster to ship and easier to maintain—especially when an app needs to evolve beyond a single endpoint or a single route format.",
+    longDescription: "This project is about developer experience. Instead of rewriting low-level HTTP calls and query construction every time I needed routes data, I built a small wrapper that centralizes configuration, request building, and response parsing.\n\nThe result is a reusable module that makes routing features faster to ship and easier to maintain, especially when an app needs to evolve beyond a single endpoint or a single route format.",
     image: "https://i.cdn.newsbytesapp.com/images/l39020231213160207.jpeg",
     additionalImages: [
       // add screenshots of example usage or architecture diagrams if desired
@@ -83,7 +106,7 @@ export const projectsData = [
     type: 'project',
     title: "Event Management API",
     description: "REST API for event CRUD built with Express + Prisma + Postgres, with validation and centralized error handling to keep the service predictable as it scales.",
-    longDescription: "This project is a clean, practical backend foundation for managing events—create, update, list, and delete—backed by PostgreSQL and Prisma. I built it to be easy to extend: clear separation between routes/controllers/services, predictable error handling, and input validation that protects the database and the developer experience.\n\nIt’s the kind of API work I enjoy: small surface area, strong fundamentals, and a structure that stays readable when requirements change.",
+    longDescription: "This project is a clean, practical backend foundation for managing events (create, update, list, delete), backed by PostgreSQL and Prisma. I built it to be easy to extend: clear separation between routes/controllers/services, predictable error handling, and input validation that protects the database and the developer experience.\n\nIt’s the kind of API work I enjoy: small surface area, strong fundamentals, and a structure that stays readable when requirements change.",
     image: "https://blog.accurate.com.br/wp-content/uploads/2023/10/apiwebservicewebstoryslide2-1920x1080-1.jpg", // can be replaced with a screenshot of your repo or diagram
     additionalImages: [
       // here you can add code screenshots, architecture diagrams, or test screenshots
@@ -119,18 +142,16 @@ export const getProjectById = (id) => {
   return projectsData.find(project => project.id === id)
 }
 
-// Function to get all projects sorted by date
+// Function to get all projects sorted by date (non-mutating)
 export const getSortedProjects = () => {
-  return projectsData.sort((a, b) => new Date(b.date) - new Date(a.date))
+  return [...projectsData].sort((a, b) => new Date(b.date) - new Date(a.date))
 }
 
-// Function to group projects by year
-export const getProjectsByYear = () => {
+// Function to group projects by year (internal)
+const getProjectsByYear = () => {
   return getSortedProjects().reduce((acc, project) => {
     const year = new Date(project.date).getFullYear()
-    if (!acc[year]) {
-      acc[year] = []
-    }
+    if (!acc[year]) acc[year] = []
     acc[year].push(project)
     return acc
   }, {})
@@ -138,7 +159,7 @@ export const getProjectsByYear = () => {
 
 // Function to get unique years from projects
 export const getProjectYears = () => {
-  return Object.keys(getProjectsByYear()).sort((a, b) => b - a)
+  return Object.keys(getProjectsByYear()).sort((a, b) => Number(b) - Number(a))
 }
 
 // Function to get all technologies
@@ -147,20 +168,7 @@ export const getAllTechnologies = () => {
   return [...new Set(allTags)].sort()
 }
 
-// Function to filter projects by technology
-export const filterProjectsByTechnology = (technology) => {
-  if (!technology || technology === 'all') return getSortedProjects()
-  return getSortedProjects().filter(project => 
-    project.tags.some(tag => tag.toLowerCase().includes(technology.toLowerCase()))
-  )
-}
-
 // Function to get featured projects
 export const getFeaturedProjects = () => {
   return projectsData.filter(project => project.featured === true)
-}
-
-// Aliases to maintain compatibility
-export const sortedProjectsData = getSortedProjects()
-export const projectsByYear = getProjectsByYear()
-export const projectYears = getProjectYears() 
+} 

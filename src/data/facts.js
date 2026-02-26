@@ -5,7 +5,7 @@ export const factsData = [
     type: 'fact',
     year: '2020',
     title: 'First Line of Code',
-    description: 'Created a Minecraft mod using Java at the age of 16, marking my very first coding experience.',
+    description: 'Built a Minecraft mod in Java at 16. That was the first time I wrote actual code.',
     date: '2020-06-01',
     highlight: false
   },
@@ -14,7 +14,7 @@ export const factsData = [
     type: 'fact',
     year: '2021',
     title: 'First GitHub Page',
-    description: 'Created my first GitHub repository and published my first personal website, marking the beginning of my coding journey.',
+    description: 'Put up my first GitHub repo and a basic personal site. Learned HTML/CSS by breaking things.',
     date: '2021-03-15',
     highlight: false
   },
@@ -23,7 +23,7 @@ export const factsData = [
     type: 'fact',
     year: '2022',
     title: 'Joined College',
-    description: 'Began Software Engineering studies at UTFPR, starting the academic journey in February.',
+    description: 'Started Software Engineering at UTFPR. Finally had structure around what I was already doing on my own.',
     date: '2022-02-01',
     highlight: false
   },
@@ -32,7 +32,7 @@ export const factsData = [
     type: 'fact',
     year: '2023',
     title: 'First Git Repository',
-    description: 'Pushed my first official Git repository to GitHub in May, expanding my developer workflow.',
+    description: 'First proper Git repo pushed to GitHub. Version control finally clicked.',
     date: '2023-05-01',
     highlight: false
   },
@@ -41,7 +41,7 @@ export const factsData = [
     type: 'fact',
     year: '2023',
     title: 'First Complete Project',
-    description: 'Completed my first fully developed and functional project in November, consolidating my practical knowledge.',
+    description: 'Finished my first real project end-to-end in November. Not a tutorial, an actual working app.',
     date: '2023-11-01',
     highlight: false
   },
@@ -50,7 +50,7 @@ export const factsData = [
     type: 'fact',
     year: '2024',
     title: 'Portfolio v1 Created',
-    description: 'Launched the first version of my personal portfolio in September, showcasing projects and achievements.',
+    description: 'Shipped v1 of my portfolio in September. It looked rough, but it was mine.',
     date: '2024-09-01',
     highlight: false
   }
@@ -61,10 +61,7 @@ export const getFactById = (id) => {
   return factsData.find(fact => fact.id === id)
 }
 
-// Function to get all facts sorted by date
+// Function to get all facts sorted by date (non-mutating)
 export const getSortedFacts = () => {
-  return factsData.sort((a, b) => new Date(a.date) - new Date(b.date))
+  return [...factsData].sort((a, b) => new Date(a.date) - new Date(b.date))
 }
-
-// Alias to maintain compatibility
-export const sortedFactsData = getSortedFacts()
