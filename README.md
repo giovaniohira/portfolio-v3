@@ -78,9 +78,27 @@ npm run build
 The purple theme can be customized in `tailwind.config.js` under the `colors.purple` section.
 
 ### Content
-- Update project data in `src/components/Projects.jsx`
-- Modify timeline data in `src/components/Home.jsx`
+- Update project data in `src/data/projects.js`
+- Update experience data in `src/data/experience.js`
 - Change contact information in `src/components/Contact.jsx`
+
+### Adding content
+
+**New project**
+1. Open `src/data/projects.js`.
+2. Use the exported `projectTemplate` at the top as a reference (or copy an existing entry).
+3. Add a new object to the `projectsData` array with a unique `id` in the form `proj_XXX` (e.g. `proj_005`).
+4. Required fields: `id`, `type: 'project'`, `title`, `description`, `image`, `tags`, `date`, `status`.
+5. Optional: `featured`, `longDescription`, `additionalImages`, `links` (github, liveDemo, article, npm), `features`, `architecture`.
+6. The project will appear on the Projects page and (if `featured: true`) on the Home page. No routing changes needed.
+
+**New experience**
+1. Open `src/data/experience.js`.
+2. Use the exported `experienceTemplate` at the top as a reference (or copy an existing entry).
+3. Add a new object to the `experienceData` array with a unique `id` in the form `exp_XXX`.
+4. Required: `id`, `company`, `position`, `employmentType`, `location`, `startDate`, `endDate` (use `null` if current role), `isCurrent`.
+5. Recommended: `shortSummary` (shown on the home card). Optional: `companyUrl`, `description`, `functionSummary`, `keyResponsibilities`, `impact`, `skills`.
+6. The experience will appear on the Home page and at `/experience/:id`. No routing changes needed.
 
 ### Animations
 Animation configurations can be adjusted in the Framer Motion components throughout the app.
