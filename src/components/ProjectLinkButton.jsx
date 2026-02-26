@@ -43,7 +43,7 @@ const ProjectLinkButton = ({
     }
   };
 
-  const baseClasses = "flex items-center w-full px-4 py-3 border border-gray-700 hover:border-gray-600 text-white rounded transition-all duration-300";
+  const baseClasses = "flex items-center w-full px-4 py-3 border border-border hover:border-accent/60 text-text rounded transition-all duration-300";
   const combinedClasses = `${baseClasses} ${className}`.trim();
 
   return (

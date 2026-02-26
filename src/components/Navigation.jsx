@@ -1,30 +1,32 @@
 import { motion } from 'framer-motion'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { useState } from 'react'
 
-const Navigation = ({ currentPage, setCurrentPage }) => {
+const pathToPage = (pathname) => {
+  if (pathname === '/') return 'home'
+  if (pathname === '/contact') return 'contact'
+  if (pathname === '/projects' || pathname.startsWith('/projects/')) return 'projects'
+  return 'home'
+}
+
+const Navigation = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const currentPage = pathToPage(location.pathname)
 
   const handleNavigation = (page) => {
-    setCurrentPage(page)
-    navigate('/')
+    if (page === 'home') navigate('/')
+    else if (page === 'projects') navigate('/projects')
+    else if (page === 'contact') navigate('/contact')
   }
 
   const handleMobileNavigation = (page) => {
-    setCurrentPage(page)
-    navigate('/')
+    handleNavigation(page)
     setIsMobileMenuOpen(false)
   }
 
-  const isActive = (page) => {
-    // Check if we're on a project page
-    if (location.pathname.startsWith('/projects/')) {
-      return page === 'projects'
-    }
-    return currentPage === page
-  }
+  const isActive = (page) => currentPage === page
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50  backdrop-blur-sm">
@@ -32,13 +34,13 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0 slide-in-left">
-            <a 
-              href="/" 
-              className="text-lg font-medium text-gray-100 hover:text-purple-300 transition-colors"
-              onClick={() => setCurrentPage('home')}
+            <Link
+              to="/"
+              className="flex items-center gap-2 text-lg font-medium text-[var(--color-text)] hover:opacity-90 transition-opacity"
+              aria-label="Ohira - Home"
             >
-              Ohira
-            </a>
+              <img src="/favicon.svg" alt="" className="h-8 w-8" />
+            </Link>
           </div>
 
           {/* Navigation Links */}
@@ -54,10 +56,11 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
                   onClick={() => handleNavigation(item.page)}
                   className={`text-sm font-medium transition-all duration-300 ${
                     isActive(item.page)
-                      ? 'text-purple-300'
-                      : 'text-gray-300 hover:text-purple-300'
+                      ? 'text-accent'
+                      : 'text-muted hover:text-accent'
                   }`}
                   style={{ animationDelay: `${0.1 + index * 0.1}s` }}
+                  aria-current={isActive(item.page) ? 'page' : undefined}
                 >
                   {item.name}
                 </button>
@@ -69,7 +72,7 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
           <div className="flex-shrink-0 slide-in-right">
             <button
               onClick={() => handleNavigation('contact')}
-              className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-purple-300 bg-purple-900/20 border border-purple-500/30 rounded-lg transition-all duration-300"
+              className="px-4 py-2 text-sm font-medium text-muted hover:text-accent bg-surface border border-border rounded-lg transition-all duration-300"
             >
               Let's talk
             </button>
@@ -79,7 +82,7 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
           <div className="md:hidden">
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-300 hover:text-purple-300 p-2 transition-colors"
+              className="text-muted hover:text-accent p-2 transition-colors"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -94,7 +97,7 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="md:hidden bg-purple-900/40 backdrop-blur-sm border-t border-purple-500/30"
+            className="md:hidden bg-surface/80 backdrop-blur-sm border-t border-border"
           >
             <div className="px-6 py-4 space-y-4">
               {[
@@ -107,16 +110,17 @@ const Navigation = ({ currentPage, setCurrentPage }) => {
                   onClick={() => handleMobileNavigation(item.page)}
                   className={`block w-full text-left text-sm font-medium transition-all duration-300 py-2 ${
                     isActive(item.page)
-                      ? 'text-purple-300'
-                      : 'text-gray-300 hover:text-purple-300'
+                      ? 'text-accent'
+                      : 'text-muted hover:text-accent'
                   }`}
+                  aria-current={isActive(item.page) ? 'page' : undefined}
                 >
                   {item.name}
                 </button>
               ))}
               <button
                 onClick={() => handleMobileNavigation('contact')}
-                className="w-full px-4 py-2 text-sm font-medium text-gray-300 hover:text-purple-300 bg-purple-900/20 border border-purple-500/30 rounded-lg transition-all duration-300 mt-4"
+                className="w-full px-4 py-2 text-sm font-medium text-muted hover:text-accent bg-surface border border-border rounded-lg transition-all duration-300 mt-4"
               >
                 Let's talk
               </button>

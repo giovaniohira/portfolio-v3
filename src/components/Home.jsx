@@ -1,52 +1,81 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { getFeaturedProjects } from "../data/projects";
 import { getSortedExperiences, formatWorkPeriod } from "../data/experience";
+import PageHeader from "./ui/PageHeader";
+import SectionLayout from "./ui/SectionLayout";
+import StatusBadge from "./ui/StatusBadge";
+import TagList from "./ui/TagList";
+import DocumentHead from "./ui/DocumentHead";
+
+const listVariants = {
+  visible: {
+    transition: { staggerChildren: 0.07, delayChildren: 0.05 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const HOME_DESCRIPTION = "Giovani Ohira — Backend & full-stack developer, Mid-Level Software Engineer at Nexus Labz. 2+ years building production mobile and backend systems. Projects, experience & contact. Curitiba, Brazil.";
 
 const Home = () => {
+  const navigate = useNavigate();
   const featuredProjects = getFeaturedProjects();
   const experiences = getSortedExperiences();
 
   return (
-    <div className="min-h-screen px-6 py-16">
-      <div className="max-w-4xl mx-auto">
+    <SectionLayout>
+      <DocumentHead title="Giovani Ohira | Backend & Full-Stack Developer" description={HOME_DESCRIPTION} />
         {/* Header */}
-        <div className="text-center mb-24 pb-8 fade-in relative">
-          <h1 className="text-4xl md:text-5xl font-light mb-6 text-gray-100">
-            Hi, I'm <span className="accent-text">Giovani Ohira</span>
-          </h1>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Junior developer focused on backend with 2 years of professional experience, currently working as SDET{" "}
-            <a href="https://voidr.co" target="_blank" rel="noopener noreferrer" className="accent-text hover:opacity-80">
-              @voidr
-            </a>
-          </p>
-          {/* Subtle gradient separator */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-px bg-gradient-to-r from-transparent via-purple-500/20 to-transparent" />
-        </div>
+        <PageHeader
+          title="Hi, I'm"
+          accentWord="Giovani Ohira"
+          subtitle={
+            <>
+              Backend-leaning full-stack developer with 2 years of professional experience. Currently shipping production mobile and backend systems as Mid-Level Software Engineer{" "}
+              <a href="https://nexuslabz.co" target="_blank" rel="noopener noreferrer" className="accent-text hover:opacity-80">
+                @Nexus Labz
+              </a>
+            </>
+          }
+          className="mb-24"
+        />
 
         {/* Main Content - Two Column Layout */}
-        <div className="grid lg:grid-cols-2 gap-24 mb-20">
+        <motion.div
+          className="grid lg:grid-cols-2 gap-24 mb-20"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={listVariants}
+        >
           {/* Column 1: About Me Section */}
-          <section className="fade-in-delay-1 text-left">
+          <motion.section
+            className="text-left"
+            variants={itemVariants}
+          >
             <div className="mb-10">
-              <h2 className="text-2xl font-light mb-6 text-gray-100 text-left">
+              <h2 className="text-2xl font-light mb-6 text-text text-left">
                 About <span className="accent-text">Me</span>
               </h2>
-              <p className="text-gray-300 leading-relaxed text-left">
-                Get to know me better through my background and experience.
+              <p className="text-muted leading-relaxed text-left">
+                Background, stack, and what I bring to a team.
               </p>
             </div>
 
             <div className="space-y-10">
               {/* Personal Info */}
-              <div className="text-left pl-4 py-4 rounded-lg bg-gradient-to-r from-purple-900/5 to-transparent border-l border-purple-500/10">
-                <h3 className="text-lg font-medium mb-4 text-gray-100 text-left">
+              <div className="text-left pl-4 py-4 rounded-lg bg-gradient-to-r from-surface/50 to-transparent border-l border-border">
+                <h3 className="text-lg font-medium mb-4 text-text text-left">
                   Personal Information
                 </h3>
                 <ul className="space-y-3 text-left">
-                  <li className="text-gray-300 text-left flex items-center gap-3">
+                  <li className="text-muted text-left flex items-center gap-3">
                     <svg
-                      className="w-4 h-4 text-purple-300"
+                      className="w-4 h-4 text-accent"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -60,9 +89,9 @@ const Home = () => {
                     </svg>
                     21 years old
                   </li>
-                  <li className="text-gray-300 text-left flex items-center gap-3">
+                  <li className="text-muted text-left flex items-center gap-3">
                     <svg
-                      className="w-4 h-4 text-purple-300"
+                      className="w-4 h-4 text-accent"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -82,9 +111,9 @@ const Home = () => {
                     </svg>
                     Curitiba, Brazil
                   </li>
-                  <li className="text-gray-300 text-left flex items-center gap-3">
+                  <li className="text-muted text-left flex items-center gap-3">
                     <svg
-                      className="w-4 h-4 text-purple-300"
+                      className="w-4 h-4 text-accent"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -103,54 +132,58 @@ const Home = () => {
 
               {/* Description */}
               <div className="text-left pt-6 relative">
-                <div className="absolute top-0 left-0 w-16 h-px bg-gradient-to-r from-purple-500/15 to-transparent" />
-                <h3 className="text-lg font-medium mb-4 text-gray-100 text-left">
+                <div className="absolute top-0 left-0 w-16 h-px bg-gradient-to-r from-accent/15 to-transparent" />
+                <h3 className="text-lg font-medium mb-4 text-text text-left">
                   Who I Am
                 </h3>
-                <p className="text-gray-300 leading-relaxed text-left">
-                  I’m a backend-leaning full‑stack developer who cares about building software that doesn’t break in real life—secure by default, fast under pressure, and easy to maintain. I started coding in 2020 and shifted hard into web development in 2022; since then I’ve been learning by shipping: personal projects that force real decisions around architecture, tradeoffs, and reliability.
+                <p className="text-muted leading-relaxed text-left">
+                  I’m a backend-leaning full-stack developer. I care about building software that doesn’t break in real life: secure by default, fast under pressure, and easy to maintain. I started coding in 2020 and shifted hard into web development in 2022; since then I’ve been learning by shipping real projects that force real decisions around architecture, tradeoffs, and reliability.
                 </p>
-                <p className="text-gray-300 leading-relaxed mt-4 text-left">
-                  Today I work as an SDET, which means I’m obsessive about quality and edge cases—and I bring that mindset into development. My core stack is React, Node.js, and TypeScript, and I’m especially drawn to roles where I can own backend features end‑to‑end, tighten up performance and security, and collaborate with a team that values clear communication and clean execution.
+                <p className="text-muted leading-relaxed mt-4 text-left">
+                  Today I work as an SDET, so I’m obsessive about quality and edge cases, and I bring that mindset into everything I build. My core stack is React, Node.js, and TypeScript. I’m especially drawn to roles where I can own backend features from design to deployment, tighten up performance and security, and work with a team that values clear communication and clean execution.
                 </p>
               </div>
             </div>
-          </section>
+          </motion.section>
 
           {/* Column 2: Experience + Featured Projects */}
-          <div className="fade-in-delay-2">
+          <motion.div variants={itemVariants}>
             {/* Experience Section */}
             <section className="text-left pb-6 relative">
               <div className="mb-10">
-                <h2 className="text-2xl font-light mb-6 text-gray-100 text-left">
+                <h2 className="text-2xl font-light mb-6 text-text text-left">
                   <span className="accent-text">Experience</span>
                 </h2>
-                <p className="text-gray-300 leading-relaxed text-left">
-                  Professional experience and career journey.
+                <p className="text-muted leading-relaxed text-left">
+                  Where I've worked and what I've shipped.
                 </p>
               </div>
 
-              <div className="space-y-8">
-                {experiences.map((exp, index) => (
+              <motion.div
+                className="space-y-8"
+                variants={listVariants}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+              >
+                {experiences.map((exp) => (
                   <motion.div
                     key={exp.id}
-                    className="bg-gray-800/10 rounded-lg p-5 border border-gray-700/30 hover:bg-gray-800/20 transition-all duration-300 cursor-pointer"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 + index * 0.1 }}
-                    onClick={() => window.location.href = `/experience/${exp.id}`}
+                    className="bg-surface/40 rounded-lg p-5 border border-border hover:bg-surface/60 transition-all duration-300 cursor-pointer"
+                    variants={itemVariants}
+                    onClick={() => navigate(`/experience/${exp.id}`)}
                   >
-                    {/* Company + meta (gray info à direita, mesma altura que título + cargo) */}
-                    <div className="flex justify-between items-stretch gap-4 mb-4">
-                      <div className="flex flex-col justify-between">
-                        <h3 className="text-lg font-medium text-gray-100 mb-1">
+                    {/* Company + meta: right block fixed at top so multi-line titles don't push it down */}
+                    <div className="flex justify-between items-start gap-4 mb-4">
+                      <div className="flex flex-col min-w-0">
+                        <h3 className="text-lg font-medium text-text mb-1">
                           {exp.company}
                         </h3>
-                        <p className="text-sm font-medium text-purple-300">
+                        <p className="text-sm font-medium text-accent">
                           {exp.position}
                         </p>
                       </div>
-                      <div className="flex flex-col justify-between text-right text-xs text-gray-400 shrink-0">
+                      <div className="flex flex-col items-end text-right text-xs text-muted shrink-0">
                         <p>{formatWorkPeriod(exp.startDate, exp.endDate, exp.isCurrent)}</p>
                         <p>{exp.location}</p>
                         <p>{exp.employmentType}</p>
@@ -159,13 +192,13 @@ const Home = () => {
 
                     {/* Short Summary (max 4 lines) */}
                     <div className="mb-4">
-                      <p className="text-sm text-gray-300 leading-relaxed line-clamp-4">
+                      <p className="text-sm text-muted leading-relaxed line-clamp-4">
                         {exp.shortSummary || exp.functionSummary}
                       </p>
                     </div>
 
                     {/* Read More Link */}
-                    <div className="flex items-center gap-2 text-xs text-purple-300 hover:text-purple-200 transition-colors">
+                    <div className="flex items-center gap-2 text-xs text-accent hover:opacity-80 transition-colors">
                       <span>Read more</span>
                       <svg
                         className="w-3 h-3"
@@ -183,77 +216,59 @@ const Home = () => {
                     </div>
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </section>
 
             {/* Featured Projects Section */}
             {featuredProjects.length > 0 && (
-              <div className="mb-12 pt-6 section-fade-top section-glow">
-                <h2 className="text-2xl font-light mb-6 text-gray-100">
-                  Featured <span className="text-purple-300">Projects</span>
+              <motion.div
+                className="mb-12 pt-6 section-fade-top section-glow"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                variants={listVariants}
+              >
+                <h2 className="text-2xl font-light mb-6 text-text">
+                  Featured <span className="text-accent">Projects</span>
                 </h2>
-                <p className="text-gray-300 leading-relaxed mb-8">
-                  Highlighted projects that showcase my skills and passion for
-                  creating innovative solutions.
+                <p className="text-muted leading-relaxed mb-8">
+                  Side projects where I made real architecture and security
+                  decisions, not tutorials.
                 </p>
 
-                <div className="space-y-4">
-                  {featuredProjects.map((project, index) => (
+                <motion.div
+                  className="space-y-4"
+                  variants={listVariants}
+                >
+                  {featuredProjects.map((project) => (
                     <motion.div
                       key={project.id}
-                      className="bg-gray-800/10 rounded-lg p-3 cursor-pointer hover:bg-gray-800/20 transition-all duration-300 border border-gray-700/30"
-                      onClick={() =>
-                        (window.location.href = `/projects/${project.id}`)
-                      }
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.1 + index * 0.1 }}
+                      className="bg-surface/40 rounded-lg p-3 cursor-pointer hover:bg-surface/60 transition-all duration-300 border border-border"
+                      onClick={() => navigate(`/projects/${project.id}`)}
+                      variants={itemVariants}
                       whileHover={{ x: 5 }}
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <h3 className="text-xs font-medium text-gray-100">
+                        <h3 className="text-xs font-medium text-text">
                           {project.title}
                         </h3>
-                        <span
-                          className={`text-xs font-medium ${
-                            project.status === "completed"
-                              ? "text-green-300"
-                              : "text-yellow-300"
-                          }`}
-                        >
-                          {project.status}
-                        </span>
+                        <StatusBadge status={project.status} />
                       </div>
 
-                      <p className="text-gray-300 text-xs mb-2 leading-relaxed line-clamp-1">
+                      <p className="text-muted text-xs mb-2 leading-relaxed line-clamp-1">
                         {project.description}
                       </p>
 
-                      <div className="flex flex-wrap gap-1">
-                        {project.tags.slice(0, 2).map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-1.5 py-0.5 text-xs text-purple-300 bg-purple-900/20 rounded"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                        {project.tags.length > 2 && (
-                          <span className="px-1.5 py-0.5 text-gray-400 text-xs">
-                            +{project.tags.length - 2}
-                          </span>
-                        )}
-                      </div>
+                      <TagList tags={project.tags} maxVisible={2} className="gap-1" />
                     </motion.div>
                   ))}
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             )}
 
-          </div>
-        </div>
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+    </SectionLayout>
   );
 };
 

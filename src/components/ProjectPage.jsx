@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import { useParams } from "react-router-dom";
-import { sortedProjectsData } from "../data/projects";
+import { getProjectById } from "../data/projects";
 import {
-  ArrowLeft,
   ExternalLink,
   Github,
   Globe,
@@ -12,6 +11,9 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import ProjectLinkButton from "./ProjectLinkButton";
+import BackLink from "./ui/BackLink";
+import StatusBadge from "./ui/StatusBadge";
+import DocumentHead from "./ui/DocumentHead";
 
 const ProjectPage = () => {
   const { projectId } = useParams();
@@ -19,8 +21,22 @@ const ProjectPage = () => {
   const [imageLoading, setImageLoading] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Find the project by ID from the URL
-  const project = sortedProjectsData.find((p) => p.id === projectId);
+  const project = getProjectById(projectId);
+
+  if (!project) {
+    return (
+      <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-3xl font-display font-bold text-text mb-4">
+            Project Not Found
+          </h1>
+          <p className="text-muted">
+            The project you're looking for doesn't exist.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   // Handle keyboard events
   useEffect(() => {
@@ -43,7 +59,6 @@ const ProjectPage = () => {
 
     if (selectedImage) {
       document.addEventListener("keydown", handleKeyDown);
-      // Prevent body scroll when modal is open
       document.body.style.overflow = "hidden";
     } else {
       document.addEventListener("keydown", handleKeyDown);
@@ -57,27 +72,6 @@ const ProjectPage = () => {
     };
   }, [selectedImage, project.additionalImages]);
 
-  if (!project) {
-    return (
-      <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-3xl font-bold text-white mb-4">
-            Project Not Found
-          </h1>
-          <p className="text-gray-300">
-            The project you're looking for doesn't exist.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  const handleProjectClick = (item) => {
-    if (item.source === "project" && item.projectId) {
-      // Navigate to the individual project page
-      window.location.href = `/projects/${item.projectId}`;
-    }
-  };
 
   const handleImageClick = (imageSrc, imageAlt) => {
     setImageLoading(true);
@@ -113,8 +107,12 @@ const ProjectPage = () => {
     setCurrentImageIndex(index);
   };
 
+  const pageTitle = `${project.title} | Projects | Giovani Ohira`;
+  const pageDescription = project.description?.slice(0, 155) + (project.description?.length > 155 ? "…" : "") || `Project: ${project.title}. By Giovani Ohira.`;
+
   return (
     <div className="min-h-screen px-4 sm:px-6 lg:px-8 py-8">
+      <DocumentHead title={pageTitle} description={pageDescription} />
       <div className="max-w-6xl mx-auto">
         {/* Back Button */}
         <motion.div
@@ -123,13 +121,7 @@ const ProjectPage = () => {
           transition={{ duration: 0.6 }}
           className="mb-8"
         >
-          <a
-            href="/projects"
-            className="inline-flex items-center text-purple-400 hover:text-purple-300 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Projects
-          </a>
+          <BackLink to="/projects" label="Back to Projects" className="text-accent hover:opacity-90" />
         </motion.div>
 
         {/* Project Header */}
@@ -140,20 +132,14 @@ const ProjectPage = () => {
           className="text-center mb-16"
         >
           <div className="mb-4">
-            <span
-              className={`inline-block px-3 py-1 text-sm font-medium ${
-                project.status === "completed"
-                  ? "text-green-400"
-                  : "text-yellow-400"
-              }`}
-            >
-              {project.status}
+            <span className="inline-block px-3 py-1 text-sm font-medium">
+              <StatusBadge status={project.status} className={project.status === "completed" ? "text-green-400" : "text-yellow-400"} />
             </span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-light mb-6 text-white">
+          <h1 className="text-3xl md:text-5xl font-display font-light mb-6 text-text">
             {project.title}
           </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-muted max-w-2xl mx-auto leading-relaxed">
             {project.description}
           </p>
         </motion.div>
@@ -183,14 +169,14 @@ const ProjectPage = () => {
 
           {/* Technologies Used */}
           <div className="mt-8">
-            <h3 className="text-lg font-medium text-white mb-4">
+            <h3 className="text-lg font-medium text-text mb-4">
               Technologies
             </h3>
             <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="px-3 py-1 text-sm text-gray-400 border border-gray-700 rounded"
+                  className="px-3 py-1 text-sm text-muted border border-border rounded"
                 >
                   {tag}
                 </span>
@@ -200,7 +186,7 @@ const ProjectPage = () => {
         </motion.div>
 
         {/* Simple Separator */}
-        <div className="border-t border-gray-800 my-16"></div>
+        <div className="border-t border-border my-16"></div>
 
         {/* Additional Images Gallery */}
         {project.additionalImages && project.additionalImages.length > 0 && (
@@ -211,7 +197,7 @@ const ProjectPage = () => {
             className="mb-16"
           >
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-light text-white mb-2">
+              <h3 className="text-2xl font-light text-text mb-2">
                 Gallery
               </h3>
             </div>
@@ -239,7 +225,7 @@ const ProjectPage = () => {
                   {/* Previous Button */}
                   <button
                     onClick={previousImage}
-                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded p-2 transition-all duration-300"
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 text-text rounded p-2 transition-all duration-300"
                   >
                     <ChevronLeft className="w-5 h-5" />
                   </button>
@@ -247,7 +233,7 @@ const ProjectPage = () => {
                   {/* Next Button */}
                   <button
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded p-2 transition-all duration-300"
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 text-text rounded p-2 transition-all duration-300"
                   >
                     <ChevronRight className="w-5 h-5" />
                   </button>
@@ -255,7 +241,7 @@ const ProjectPage = () => {
               )}
 
               {/* Image Counter */}
-              <div className="absolute top-4 left-4 bg-black/30 text-white px-2 py-1 rounded text-sm">
+              <div className="absolute top-4 left-4 bg-black/30 text-text px-2 py-1 rounded text-sm">
                 {currentImageIndex + 1} / {project.additionalImages.length}
               </div>
             </div>
@@ -296,13 +282,13 @@ const ProjectPage = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="space-y-6"
           >
-            <h3 className="text-xl font-medium text-white">
+            <h3 className="text-xl font-medium text-text">
               Details
             </h3>
             <div className="space-y-4">
               <div>
-                <span className="text-gray-400 text-sm">Date:</span>
-                <p className="text-white">
+                <span className="text-muted text-sm">Date:</span>
+                <p className="text-text">
                   {project.date
                     ? new Date(project.date).toLocaleDateString("en-US", {
                         year: "numeric",
@@ -313,7 +299,7 @@ const ProjectPage = () => {
                 </p>
               </div>
               <div>
-                <span className="text-gray-400 text-sm">Status:</span>
+                <span className="text-muted text-sm">Status:</span>
                 <p
                   className={`capitalize ${
                     project.status === "completed"
@@ -334,7 +320,7 @@ const ProjectPage = () => {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="space-y-6"
           >
-            <h3 className="text-xl font-medium text-white">
+            <h3 className="text-xl font-medium text-text">
               Links
             </h3>
             <div className="space-y-3">
@@ -368,7 +354,7 @@ const ProjectPage = () => {
               )}
               {/* Fallback message if no actions available */}
               {(!project.links || Object.keys(project.links).length === 0) && (
-                <div className="text-center py-6 text-gray-400">
+                <div className="text-center py-6 text-muted">
                   <p className="text-sm">
                     No external links available
                   </p>
@@ -389,7 +375,7 @@ const ProjectPage = () => {
             <div className="grid md:grid-cols-2 gap-12">
               {/* Features */}
               <div className="space-y-6">
-                <h3 className="text-xl font-medium text-white">
+                <h3 className="text-xl font-medium text-text">
                   Features
                 </h3>
                 <ul className="space-y-3">
@@ -398,8 +384,8 @@ const ProjectPage = () => {
                       key={index}
                       className="flex items-start"
                     >
-                      <span className="text-gray-400 mr-3 mt-1">•</span>
-                      <span className="text-gray-300">{feature}</span>
+                      <span className="text-muted mr-3 mt-1">•</span>
+                      <span className="text-muted">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -408,17 +394,17 @@ const ProjectPage = () => {
               {/* Architecture */}
               {project.architecture && (
                 <div className="space-y-6">
-                  <h3 className="text-xl font-medium text-white">
+                  <h3 className="text-xl font-medium text-text">
                     Architecture
                   </h3>
                   <div className="space-y-4">
                     {Object.entries(project.architecture).map(
                       ([key, value]) => (
                         <div key={key}>
-                          <span className="text-gray-400 text-sm capitalize">
+                          <span className="text-muted text-sm capitalize">
                             {key.replace(/([A-Z])/g, " $1").trim()}:
                           </span>
-                          <p className="text-white mt-1">{value}</p>
+                          <p className="text-text mt-1">{value}</p>
                         </div>
                       )
                     )}
@@ -436,59 +422,13 @@ const ProjectPage = () => {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="mb-16"
         >
-          <h2 className="text-2xl font-light text-white mb-8">
+          <h2 className="text-2xl font-display font-light text-text mb-8">
             About This Project
           </h2>
           <div className="space-y-6">
-            {project.longDescription ? (
-              <p className="text-gray-300 leading-relaxed">
-                {project.longDescription}
-              </p>
-            ) : (
-              <p className="text-gray-300 leading-relaxed">
-                This project represents a significant milestone in my
-                development journey. It showcases my ability to work with modern
-                technologies and deliver solutions that meet real-world
-                requirements.
-              </p>
-            )}
-
-            {project.id === 1 && (
-              <>
-                <p className="text-gray-300 leading-relaxed">
-                  <strong className="text-white">Vault</strong> was born from my
-                  passion for cybersecurity and my desire to create a truly
-                  secure password management solution. Unlike traditional
-                  password managers that rely on server-side encryption, Vault
-                  ensures that your master password and sensitive data never
-                  leave your browser. Every password, username, and TOTP secret
-                  is encrypted using AES-GCM encryption before being transmitted
-                  to the server.
-                </p>
-                <p className="text-gray-300 leading-relaxed">
-                  This project demonstrates my commitment to security-first
-                  development practices and my ability to create
-                  enterprise-grade applications that prioritize user privacy and
-                  data protection.
-                </p>
-              </>
-            )}
-
-            {!project.longDescription && project.id !== 1 && (
-              <>
-                <p className="text-gray-300 leading-relaxed">
-                  The development process involved careful planning, iterative
-                  design, and thorough testing to ensure a high-quality end
-                  product. I learned valuable lessons about architecture, user
-                  experience, and project management throughout this endeavor.
-                </p>
-                <p className="text-gray-300 leading-relaxed">
-                  This project demonstrates my commitment to writing clean,
-                  maintainable code and creating intuitive user interfaces that
-                  provide exceptional user experiences.
-                </p>
-              </>
-            )}
+            <p className="text-muted leading-relaxed whitespace-pre-line">
+              {project.longDescription || project.description}
+            </p>
           </div>
         </motion.div>
 
@@ -501,7 +441,7 @@ const ProjectPage = () => {
         >
           <a
             href="/projects"
-            className="inline-flex items-center px-6 py-3 border border-gray-700 hover:border-gray-600 text-white rounded transition-all duration-300"
+            className="inline-flex items-center px-6 py-3 border border-border hover:border-accent/60 text-text rounded transition-all duration-300"
           >
             <Globe className="w-4 h-4 mr-2" />
             View All Projects
@@ -522,7 +462,7 @@ const ProjectPage = () => {
             {/* Close Button */}
             <button
               onClick={closeImageModal}
-              className="absolute top-4 right-4 z-10 bg-black/30 hover:bg-black/50 rounded p-2 text-white transition-colors"
+              className="absolute top-4 right-4 z-10 bg-black/30 hover:bg-black/50 rounded p-2 text-text transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -532,7 +472,7 @@ const ProjectPage = () => {
               {imageLoading ? (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/70 rounded">
                   <svg
-                    className="animate-spin h-8 w-8 text-white"
+                    className="animate-spin h-8 w-8 text-text"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -562,7 +502,7 @@ const ProjectPage = () => {
               )}
 
               {/* Image Caption */}
-              <div className="absolute bottom-4 left-4 right-4 bg-black/50 rounded p-3 text-white">
+              <div className="absolute bottom-4 left-4 right-4 bg-black/50 rounded p-3 text-text">
                 <p className="text-sm">{selectedImage.alt}</p>
               </div>
             </div>

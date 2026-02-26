@@ -9,7 +9,7 @@ const Footer = () => {
       name: 'GitHub',
       href: 'https://github.com/giovaniohira',
       icon: Github,
-      color: 'hover:text-gray-100'
+      color: 'hover:text-text'
     },
     {
       name: 'LinkedIn',
@@ -21,7 +21,7 @@ const Footer = () => {
       name: 'Email',
       href: 'mailto:giovaniohira@gmail.com',
       icon: Mail,
-      color: 'hover:text-purple-300'
+      color: 'hover:text-accent'
     }
   ]
 
@@ -32,7 +32,7 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="bg-gray-900/40 backdrop-blur-sm border-t border-purple-500/20">
+    <footer className="bg-surface/60 backdrop-blur-sm border-t border-border">
       <div className="max-w-6xl mx-auto px-6 py-12">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -43,9 +43,9 @@ const Footer = () => {
         >
           {/* Brand Section */}
           <div className="space-y-4">
-            <p className="text-sm text-gray-400 leading-relaxed">
-              Building digital experiences that matter. 
-              Passionate about clean code and innovative solutions.
+            <p className="text-sm text-muted leading-relaxed">
+              Backend-focused developer who ships secure, maintainable systems.
+              Based in Brazil, working remotely.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((link) => {
@@ -56,7 +56,7 @@ const Footer = () => {
                     href={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`text-gray-500 transition-colors duration-300 ${link.color} hover:scale-110 transform`}
+                    className={`text-muted transition-colors duration-300 ${link.color} hover:scale-110 transform`}
                     aria-label={link.name}
                   >
                     <Icon size={20} />
@@ -68,7 +68,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold text-gray-100 uppercase tracking-wider">
+            <h4 className="text-sm font-semibold text-text uppercase tracking-wider">
               Quick Links
             </h4>
             <ul className="space-y-2">
@@ -76,7 +76,7 @@ const Footer = () => {
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-sm text-gray-400 hover:text-purple-300 transition-colors duration-300"
+                    className="text-sm text-muted hover:text-accent transition-colors duration-300"
                   >
                     {link.name}
                   </a>
@@ -87,18 +87,18 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h4 className="text-sm font-semibold text-gray-100 uppercase tracking-wider">
+            <h4 className="text-sm font-semibold text-text uppercase tracking-wider">
               Get In Touch
             </h4>
             <div className="space-y-2">
-              <p className="text-sm text-gray-400">
-                Ready to start your next project?
+              <p className="text-sm text-muted">
+                Have a role or project in mind?
               </p>
               <a
                 href="/contact"
-                className="inline-flex items-center text-sm text-purple-300 hover:text-purple-200 transition-colors duration-300 group"
+                className="inline-flex items-center text-sm text-accent hover:opacity-80 transition-colors duration-300 group"
               >
-                Let's work together
+                Reach out
                 <ExternalLink 
                   size={14} 
                   className="ml-1 group-hover:translate-x-1 transition-transform duration-300" 
@@ -114,19 +114,19 @@ const Footer = () => {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
-          className="mt-8 pt-8 border-t border-purple-500/20"
+          className="mt-8 pt-8 border-t border-border"
         >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-muted">
               © {currentYear} Ohira. All rights reserved.
             </p>
             <div className="flex items-center space-x-6">
-              <p className="text-xs text-gray-600">
+              <p className="text-xs text-muted">
                 Built with React & Tailwind CSS
               </p>
               <div className="flex items-center space-x-1">
                 <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-                <span className="text-xs text-gray-500">Open to proposals</span>
+                <span className="text-xs text-muted">Open to proposals</span>
               </div>
             </div>
           </div>

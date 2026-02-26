@@ -10,12 +10,12 @@ const NoProjectsFound = ({ onClearAllFilters }) => {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
     >
-      <p className="text-lg text-gray-300">
+      <p className="text-lg text-muted">
         No projects found with the selected filters.
       </p>
       <button
         onClick={onClearAllFilters}
-        className="mt-4 text-purple-300 hover:text-purple-200 underline transition-colors"
+        className="mt-4 text-accent hover:opacity-90 underline transition-colors"
       >
         Clear all filters
       </button>

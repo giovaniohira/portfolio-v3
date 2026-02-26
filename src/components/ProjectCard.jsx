@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import ProjectLinkButton from "./ProjectLinkButton";
+import StatusBadge from "./ui/StatusBadge";
+import TagList from "./ui/TagList";
 
 const ProjectCard = ({ project, onProjectClick }) => {
   return (
@@ -27,33 +29,18 @@ const ProjectCard = ({ project, onProjectClick }) => {
         <div className="lg:w-2/3 p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-start justify-between mb-3">
-              <h3 className="text-xl font-medium text-gray-100">
+              <h3 className="text-xl font-medium text-text">
                 {project.title}
               </h3>
-              <span
-                className={`text-xs font-medium ${
-                  project.status === "completed"
-                    ? "text-green-300"
-                    : "text-yellow-300"
-                }`}
-              >
-                {project.status}
-              </span>
+              <StatusBadge status={project.status} />
             </div>
 
-            <p className="text-gray-300 text-sm mb-4 leading-relaxed">
+            <p className="text-muted text-sm mb-4 leading-relaxed">
               {project.description}
             </p>
 
-            <div className="flex flex-wrap gap-2 mb-4">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-purple-300 text-xs"
-                >
-                  {tag}
-                </span>
-              ))}
+            <div className="mb-4">
+              <TagList tags={project.tags} />
             </div>
           </div>
 
@@ -62,7 +49,7 @@ const ProjectCard = ({ project, onProjectClick }) => {
               <ProjectLinkButton
                 type="demo"
                 href={project.links.liveDemo}
-                className="inline-flex items-center text-purple-300 hover:text-purple-200 text-sm font-medium transition-colors w-auto px-0 py-0 border-0 hover:border-0"
+                className="inline-flex items-center text-accent hover:opacity-90 text-sm font-medium transition-colors w-auto px-0 py-0 border-0 hover:border-0"
                 onClick={(e) => e.stopPropagation()}
               >
                 View Project
