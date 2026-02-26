@@ -6,7 +6,17 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['IBM Plex Sans', 'sans-serif'],
+        display: ['Syne', 'sans-serif'],
+      },
       colors: {
+        bg: 'var(--color-bg)',
+        surface: 'var(--color-surface)',
+        text: 'var(--color-text)',
+        accent: 'var(--color-accent)',
+        muted: 'var(--color-muted)',
+        border: 'var(--color-border)',
         purple: {
           50: '#faf5ff',
           100: '#f3e8ff',
