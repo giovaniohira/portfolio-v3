@@ -1,38 +1,41 @@
-name: Build and Deploy to Hostinger
+name: Deploy
 
 on:
   push:
     branches:
       - main
 
-permissions:
-  contents: write
-  
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout main branch
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
-      - name: Instalar dependências
-        run: npm ci
+      - run: npm ci
+      - run: npm run build
 
-      - name: Buildar projeto
-        run: npm run build
+      # ponytail: ssh+rsync nativos, sem action extra; espelha releases/current do VPS
+      - name: Deploy para VPS
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          KEY="$HOME/.ssh/deploy_key"
+          HOST="root@72.60.243.98"
+          WEB="/var/www/giovaniohira.com"
+          RELEASE="$WEB/releases/$(date +%s)"
 
-      # Troque "build" por "dist" ou "out" se for o caso
-      - name: Deploy para branch "deploy"
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: deploy
-          folder: dist
-          clean: true
-          commit-message: "Deploy automático [skip ci]"
+          install -m 700 -d "$HOME/.ssh"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$KEY"
+          chmod 600 "$KEY"
+          ssh-keyscan -H 72.60.243.98 >> "$HOME/.ssh/known_hosts" 2>/dev/null
+
+          ssh -i "$KEY" "$HOST" "mkdir -p $RELEASE"
+          rsync -avz --delete -e "ssh -i $KEY" dist/ "$HOST:$RELEASE/"
+          ssh -i "$KEY" "$HOST" "ln -sfn $RELEASE $WEB/current && chown -R www-data:www-data $WEB"
