@@ -19,7 +19,7 @@ const itemVariants = {
   visible: { opacity: 1, y: 0 },
 };
 
-const HOME_DESCRIPTION = "Giovani Ohira — Backend & full-stack developer, Mid-Level Software Engineer at Nexus Labz. 2+ years building production mobile and backend systems. Projects, experience & contact. Curitiba, Brazil.";
+const HOME_DESCRIPTION = "Giovani Ohira — Backend & full-stack developer, Mid-Level Software Engineer at Nexus Labz. 2+ years delivering client work across web and mobile, with ownership of production infrastructure and engineering decisions. Projects, experience & contact. Curitiba, Brazil.";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ const Home = () => {
           accentWord="Giovani Ohira"
           subtitle={
             <>
-              Backend-leaning full-stack developer with 2 years of professional experience. Currently shipping production mobile and backend systems as Mid-Level Software Engineer{" "}
+              Backend-leaning full-stack developer with 2 years of professional experience. Currently delivering client work across web and mobile, driving infrastructure and engineering decisions as Mid-Level Software Engineer{" "}
               <a href="https://nexuslabz.co" target="_blank" rel="noopener noreferrer" className="accent-text hover:opacity-80">
                 @Nexus Labz
               </a>
